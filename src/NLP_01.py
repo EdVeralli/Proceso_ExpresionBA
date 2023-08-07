@@ -75,10 +75,17 @@ df = df.drop(['CIUDADANO_APELLIDO'], axis=1)
 df = df.drop(['TIPO_DOC'], axis=1)
 df = df.drop(['DOCUMENTO'], axis=1)
 df = df.drop(['EMAIL_DE_CONTACTO'], axis=1)
-df = df.drop(['FECHA_INGRESO'], axis=1)
+#df = df.drop(['FECHA_INGRESO'], axis=1)
 df = df.drop(['HISTORIAL_CAMBIOS'], axis=1)
+df = df.drop(['IDENTIFICADOR'], axis=1)
+df = df.drop(['CUESTINARIO'], axis=1)
+
+
+df = df[df["FECHA_INGRESO"].str.contains("2022") == False]  ## SOLO DEJO AÑO 2023
 
 df.to_csv('df_reducido.csv', index=False, encoding='utf-8',sep=';')
+
+#sys.exit()
 
 p = open("Observaciones_Lematizadas.csv", "w")
 linea = 'Observacion_lematizada'+" ; "+'Observa_Orig' +" ; "+"Presta_Orig"+"\n"
