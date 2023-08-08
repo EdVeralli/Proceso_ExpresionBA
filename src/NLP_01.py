@@ -38,6 +38,8 @@ df_hist_unique = df_hist.drop_duplicates()
 df_hist_unique.to_csv('Prestaciones_Historicas_unique.csv', index=False, encoding='utf-8',sep=';')
 
 p = open("Prestaciones_Lematizadas.csv", "w")
+linea = 'Prestacion_lematizada'+";"+"Presta_Orig"
+p.write(linea+"\n")
 
 with open('Prestaciones_Historicas_unique.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=';')
@@ -88,7 +90,7 @@ df.to_csv('df_reducido.csv', index=False, encoding='utf-8',sep=';')
 #sys.exit()
 
 p = open("Observaciones_Lematizadas.csv", "w")
-linea = 'Observacion_lematizada'+" ; "+'Observa_Orig' +" ; "+"Presta_Orig"+"\n"
+linea = 'Observa_lematizada'+" ; "+'Observa_Orig' +" ; "+"Presta_Lematizada"+";"+"Presta_Orig"
 p.write(linea+"\n")
 
 
@@ -97,14 +99,29 @@ lista_acciones = []
 with open('df_reducido.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=';')
     for row in csv_reader:
-        prestacion       = str(row[1]).strip()
-        prestacion_orig  = str(row[1]).strip()
+        prestacion       = str(row[0]).strip()
+        prestacion_orig  = str(row[0]).strip()
+        
+        #print("prestacion:",prestacion_orig)
         
         prestacion2 = prestacion.replace("/"," / ")
         prestacion = prestacion2
         
-        observacion       = str(row[2]).strip()
-        observacion_orig  = str(row[2]).strip()
+        tokens_prestacion  = (word_tokenize(prestacion))
+        filtered_prestacion  = [w for w in tokens_prestacion  if not w.lower() in stop_words]
+
+        lista_prestacion = []
+        doc = nlp(' '.join(filtered_prestacion))
+        for sent in doc.sentences:
+            for word in sent.words:
+                print( word.text , word.lemma)
+                lista_prestacion.append(word.lemma) 
+
+        
+        observacion       = str(row[1]).strip()
+        observacion_orig  = str(row[1]).strip()
+
+        #print("observacion:",observacion_orig)
         
         observacion2 = observacion.replace("/"," / ")
         observacion = observacion2
@@ -123,10 +140,14 @@ with open('df_reducido.csv') as csv_file:
                 #print( word.text , word.lemma)
                 lista_observacion.append(word.lemma) 
 
-        p.write(' '.join(lista_observacion)+";"+observacion_orig+";"+prestacion_orig+"\n")
+        p.write(' '.join(lista_observacion)+";"+observacion_orig+";"+' '.join(lista_prestacion) +";"+prestacion_orig+"\n")
  
         if len(row)==0:
             break
+        
+        # if i == 100:
+        #     p.close()
+        #     break
 
 p.close()
 

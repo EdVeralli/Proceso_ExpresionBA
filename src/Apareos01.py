@@ -26,12 +26,12 @@ f2.write(linea+"\n")
 
 df_lemmas_historico_observa = pd.read_csv('Observaciones_Lematizadas.csv',sep=';', encoding='utf-8')  ## son las 558 MIL
 df_lemmas_historico_observa.dropna(inplace = True) ## elimino rows con NaN  ## son las 558 MIL
-df_lemmas_historico_observa=df_lemmas_historico_observa.drop(df_lemmas_historico_observa.columns[1], axis=1)
+#df_lemmas_historico_observa=df_lemmas_historico_observa.drop(df_lemmas_historico_observa.columns[1], axis=1)
 
 df_lemmas_prestaciones = pd.read_csv('Prestaciones_Lematizadas.csv',sep=';', encoding='utf-8',header=None)  ## son las 289 Prestaciones
 df_lemmas_prestaciones.dropna(inplace = True) ## elimino rows con NaN  ## son las 289 Prestaciones
-df_lemmas_prestaciones=df_lemmas_prestaciones.drop(df_lemmas_prestaciones.columns[1], axis=1)
-df_lemmas_prestaciones=df_lemmas_prestaciones.drop(df_lemmas_prestaciones.columns[1], axis=1)
+#df_lemmas_prestaciones=df_lemmas_prestaciones.drop(df_lemmas_prestaciones.columns[1], axis=1)
+#df_lemmas_prestaciones=df_lemmas_prestaciones.drop(df_lemmas_prestaciones.columns[1], axis=1)
 
 lista_acciones = []
 
