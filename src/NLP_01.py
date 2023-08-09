@@ -114,7 +114,7 @@ with open('df_reducido.csv') as csv_file:
         doc = nlp(' '.join(filtered_prestacion))
         for sent in doc.sentences:
             for word in sent.words:
-                print( word.text , word.lemma)
+                #print( word.text , word.lemma)
                 lista_prestacion.append(word.lemma) 
 
         
