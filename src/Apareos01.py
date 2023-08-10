@@ -13,18 +13,39 @@ import os
 # load_dotenv()
 # ultimo_proceso = os.getenv('FECHA')
 
+
+"""
+PONER EN Prestaciones_Lematizadas.csv   Campanas Verdes  --- todo en minuscula, porque asi No la tomo
+"""
+
+
 os.chdir("/home/eduardo/GCBA/ExpresionBA/Proceso_ExpresionBA/data/")
 
 f = open("Scores.csv", "w")
-linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'% score'
+linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'% score'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'
 f.write(linea+"\n")
 
 f2 = open("Scores_small.csv", "w")
-linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'% score'
+linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'% score'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'
 f2.write(linea+"\n")
 
 
-df_lemmas_historico_observa = pd.read_csv('Observaciones_Lematizadas.csv',sep=';', encoding='utf-8')  ## son las 558 MIL
+
+f3 = open("Observaciones_Lematizadas_limpio.csv", "w")
+linea = 'Observa_Lemma'+" ; "+'Observa' +" ; "+'Presta_Lemma_Clasificada' +" ; "+'Presta_Clasificada'
+f3.write(linea+"\n")
+i = 0
+with open('Observaciones_Lematizadas.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=';')
+    for row in csv_reader:
+        #print(row[0])
+        i = i+1
+        #print(i,row[0])
+        if i> 2 and (i<34000 or i > 35000):
+           f3.write(row[0]+";"+row[1]+";"+row[2]+";"+row[3]+"\n")
+           
+
+df_lemmas_historico_observa = pd.read_csv('Observaciones_Lematizadas_limpio.csv',sep=';', encoding='utf-8')  ## son las 558 MIL
 df_lemmas_historico_observa.dropna(inplace = True) ## elimino rows con NaN  ## son las 558 MIL
 #df_lemmas_historico_observa=df_lemmas_historico_observa.drop(df_lemmas_historico_observa.columns[1], axis=1)
 
@@ -62,16 +83,21 @@ for index, row in df_lemmas_historico_observa.iterrows():  ## son las 558 MIL
                 #print("encontre prestacion :'"+k+"' en observaciones: '"+' '.join(lista__observacion))
         if cant_encontro>0 and count <= 50000:
             score = (cant_encontro/cant_presta)*100
-            f2.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+"\n")
-            
+            f2.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+";"+row[2]+";"+row[3]+"\n")
+        
+        if count == 50002:
+           f2.close() 
+           
         if cant_encontro>0:
             score = (cant_encontro/cant_presta)*100
-            f.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+"\n")
+            f.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+";"+row[2]+";"+row[3]+"\n")
 
 
 
 f.close()
 f2.close()
+f3.close()
+
 
 
 """
