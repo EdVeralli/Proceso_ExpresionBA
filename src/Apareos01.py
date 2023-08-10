@@ -16,6 +16,10 @@ import os
 
 """
 PONER EN Prestaciones_Lematizadas.csv   Campanas Verdes  --- todo en minuscula, porque asi No la tomo
+
+https://midu.dev/como-deshacer-el-ultimo-commit-git/
+git reset --soft HEAD~1
+
 """
 
 
@@ -29,9 +33,21 @@ f2 = open("Scores_small.csv", "w")
 linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'% score'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'
 f2.write(linea+"\n")
 
+f4 = open("Prestaciones_Lematizadas_limpio.csv", "w")   ## pongo en lowercase
+linea = 'Prestacion_Lemma'+" ; "+'Prestacion' 
+f4.write(linea+"\n")
+i = 0
+with open('Prestaciones_Lematizadas.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=';')
+    for row in csv_reader:
+        #print(row[0])
+        i = i+1
+        #print(i,row[0])
+        f4.write(row[0].lower()+";"+row[1]+"\n")
+           
+f4.close()
 
-
-f3 = open("Observaciones_Lematizadas_limpio.csv", "w")
+f3 = open("Observaciones_Lematizadas_limpio.csv", "w")  ## pongo en lowercase
 linea = 'Observa_Lemma'+" ; "+'Observa' +" ; "+'Presta_Lemma_Clasificada' +" ; "+'Presta_Clasificada'
 f3.write(linea+"\n")
 i = 0
@@ -42,14 +58,14 @@ with open('Observaciones_Lematizadas.csv') as csv_file:
         i = i+1
         #print(i,row[0])
         if i> 2 and (i<34000 or i > 35000):
-           f3.write(row[0]+";"+row[1]+";"+row[2]+";"+row[3]+"\n")
+           f3.write(row[0].lower()+";"+row[1]+";"+row[2]+";"+row[3]+"\n")
            
 
 df_lemmas_historico_observa = pd.read_csv('Observaciones_Lematizadas_limpio.csv',sep=';', encoding='utf-8')  ## son las 558 MIL
 df_lemmas_historico_observa.dropna(inplace = True) ## elimino rows con NaN  ## son las 558 MIL
 #df_lemmas_historico_observa=df_lemmas_historico_observa.drop(df_lemmas_historico_observa.columns[1], axis=1)
 
-df_lemmas_prestaciones = pd.read_csv('Prestaciones_Lematizadas.csv',sep=';', encoding='utf-8',header=None)  ## son las 289 Prestaciones
+df_lemmas_prestaciones = pd.read_csv('Prestaciones_Lematizadas_limpio.csv',sep=';', encoding='utf-8',header=None)  ## son las 289 Prestaciones
 df_lemmas_prestaciones.dropna(inplace = True) ## elimino rows con NaN  ## son las 289 Prestaciones
 #df_lemmas_prestaciones=df_lemmas_prestaciones.drop(df_lemmas_prestaciones.columns[1], axis=1)
 #df_lemmas_prestaciones=df_lemmas_prestaciones.drop(df_lemmas_prestaciones.columns[1], axis=1)
@@ -81,11 +97,11 @@ for index, row in df_lemmas_historico_observa.iterrows():  ## son las 558 MIL
             if k in lista__observacion:
                 cant_encontro = cant_encontro +1
                 #print("encontre prestacion :'"+k+"' en observaciones: '"+' '.join(lista__observacion))
-        if cant_encontro>0 and count <= 50000:
+        if cant_encontro>0 and count <= 5000:
             score = (cant_encontro/cant_presta)*100
             f2.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+";"+row[2]+";"+row[3]+"\n")
         
-        if count == 50002:
+        if count == 5002:
            f2.close() 
            
         if cant_encontro>0:
