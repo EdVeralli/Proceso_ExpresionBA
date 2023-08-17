@@ -36,16 +36,40 @@ f2.write(linea+"\n")
 f4 = open("Prestaciones_Lematizadas_limpio.csv", "w")   ## pongo en lowercase
 linea = 'Prestacion_Lemma'+" ; "+'Prestacion' 
 f4.write(linea+"\n")
+
+f5 = open("Scores_small_50Percent.csv", "w")
+linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'% score'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'
+f5.write(linea+"\n")
+
+
 i = 0
 with open('Prestaciones_Lematizadas.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=';')
     for row in csv_reader:
         #print(row[0])
         i = i+1
-        #print(i,row[0])
-        f4.write(row[0].lower()+";"+row[1]+"\n")
+        if i == 1:
+            continue
+        lista__stemm = list(row[0].split(" "))
+        lista_lemma_presta_stemm = []
+        for k in lista__stemm:
+            if k[-1]== "o" or k[-1]== "a" or k[-1]== "ó" or k[-1]=="á":
+                k2 = k[:-1]
+                #print("***************",k)
+            else:
+                k2 = k
+            lista_lemma_presta_stemm.append(k2) 
+        #print("**************")
+        #print(row[0])
+        stemm = ' '.join(lista_lemma_presta_stemm)
+        #print(stemm)
+        #sys.exit()
+        f4.write(stemm.lower()+";"+row[1]+"\n")
            
 f4.close()
+
+
+#sys.exit()
 
 f3 = open("Observaciones_Lematizadas_limpio.csv", "w")  ## pongo en lowercase
 linea = 'Observa_Lemma'+" ; "+'Observa' +" ; "+'Presta_Lemma_Clasificada' +" ; "+'Presta_Clasificada'
@@ -56,9 +80,54 @@ with open('Observaciones_Lematizadas.csv') as csv_file:
     for row in csv_reader:
         #print(row[0])
         i = i+1
+        #row[0] = row[0].replace("'","")
+        #row[0] = row[0].replace("‘","")
+        
+        
+        if len(row[0])== 0:
+            #print("vacio",row[0])
+            continue
         #print(i,row[0])
         if i> 2 and (i<34000 or i > 35000):
-           f3.write(row[0].lower()+";"+row[1]+";"+row[2]+";"+row[3]+"\n")
+            lista__stemm = list(row[0].split(" "))
+            lista_lemma_observa_stemm = []
+            for k in lista__stemm:
+                if len(k)>1:
+                    if (k[-1]== "o" or k[-1]== "a" or k[-1]== "ó" or k[-1]=="á"):
+                        k2 = k[:-1]
+                    else:
+                        k2 = k
+                else:
+                    k2 = k
+                    
+                lista_lemma_observa_stemm.append(k2) 
+            #print("**************")
+            #print(row[0])
+            #print("-----------------------------")
+            lista__stemm = list(row[2].strip().split(" "))
+            lista_lemma_presta_old_stemm = []
+            for k in lista__stemm:
+                if len(k)>1:
+                    if k[-1]== "o" or k[-1]== "a" or k[-1]== "ó" or k[-1]=="á":
+                        k2 = k[:-1]
+                        #print("***************",k)
+                    else:
+                        k2 = k
+                else:
+                     k2 = k
+                     
+                lista_lemma_presta_old_stemm.append(k2) 
+     
+
+
+
+
+            old_presta =  ' '.join(lista_lemma_presta_old_stemm)
+            stemm = ' '.join(lista_lemma_observa_stemm)
+            #print(stemm)            
+            f3.write(stemm.lower()+";"+row[1]+";"+old_presta+";"+row[3]+"\n")
+
+#sys.exit()
            
 
 df_lemmas_historico_observa = pd.read_csv('Observaciones_Lematizadas_limpio.csv',sep=';', encoding='utf-8')  ## son las 558 MIL
@@ -100,6 +169,12 @@ for index, row in df_lemmas_historico_observa.iterrows():  ## son las 558 MIL
         if cant_encontro>0 and count <= 5000:
             score = (cant_encontro/cant_presta)*100
             f2.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+";"+row[2]+";"+row[3]+"\n")
+
+        if (cant_encontro/cant_presta)*100 >= 50:
+            score = (cant_encontro/cant_presta)*100
+            f5.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+";"+row[2]+";"+row[3]+"\n")
+
+
         
         if count == 5002:
            f2.close() 
@@ -113,6 +188,7 @@ for index, row in df_lemmas_historico_observa.iterrows():  ## son las 558 MIL
 f.close()
 f2.close()
 f3.close()
+f5.close()
 
 
 
