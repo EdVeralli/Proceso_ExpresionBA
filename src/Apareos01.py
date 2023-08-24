@@ -41,6 +41,10 @@ f5 = open("Scores_small_50Percent.csv", "w")
 linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'% score'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'
 f5.write(linea+"\n")
 
+f6 = open("Scores_small_40Percent.csv", "w")
+linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'% score'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'
+f6.write(linea+"\n")
+
 
 i = 0
 with open('Prestaciones_Lematizadas.csv') as csv_file:
@@ -174,6 +178,9 @@ for index, row in df_lemmas_historico_observa.iterrows():  ## son las 558 MIL
             score = (cant_encontro/cant_presta)*100
             f5.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+";"+row[2]+";"+row[3]+"\n")
 
+        if (cant_encontro/cant_presta)*100 >= 40:
+            score = (cant_encontro/cant_presta)*100
+            f6.write(row[0]+";"+palabras+";"+str(cant_encontro)+";"+str(cant_presta)+";"+str(round(score))+";"+row[2]+";"+row[3]+"\n")
 
         
         if count == 5002:
@@ -189,6 +196,8 @@ f.close()
 f2.close()
 f3.close()
 f5.close()
+f6.close()
+
 
 
 
