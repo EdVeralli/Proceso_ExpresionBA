@@ -1,0 +1,10 @@
+data/expresion.csv
+data/Observaciones_Lematizadas.csv
+data/Observaciones_Lematizadas_limpio.csv
+data/Scores.csv
+data/Scores_small.csv
+data/Scores_small_40Percent.csv
+data/Scores_small_50Percent.csv
+data/*.xlsx
+
+
