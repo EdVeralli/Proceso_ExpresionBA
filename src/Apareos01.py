@@ -80,7 +80,7 @@ linea = 'Observa_Lemma'+" ; "+'Observa' +" ; "+'Presta_Lemma_Clasificada' +" ; "
 f3.write(linea+"\n")
 i = 0
 
-#df = pd.read_csv('Observaciones_Lematizadas.csv',  delimiter=';')
+#df = pd.read_csv('Observaciones_Lematizadas.csv', delimiter=';')
 #sys.exit()
 
 with open('Observaciones_Lematizadas.csv') as csv_file:

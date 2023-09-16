@@ -177,7 +177,7 @@ df_filtered.to_csv('df_reducido.csv', index=False, encoding='utf-8',sep=';')
 
 
 p = open("Observaciones_Lematizadas.csv", "w")
-linea = 'Observa_lematizada'+" ; "+'Observa_Orig' +" ; "+"Presta_Lematizada"+";"+"Presta_Orig"
+linea = 'Observa_lematizada'+" ; "+'Observa_Orig' +" ; "+"Presta_Lematizada"+";"+"Presta_Orig"";"+"IDENTIFICADOR"
 p.write(linea+"\n")
 
 
