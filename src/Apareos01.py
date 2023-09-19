@@ -23,14 +23,37 @@ git reset --soft HEAD~1
 """
 
 
+
+
+las_top = ["Reparación de vereda","Poda de árbol/despeje de luminaria o semáforo","Reparación de luminaria apagada durante la noche", \
+"Mejora de barrido","Propuestas para la mejora en trámites","Extracción de árbol","Plantación de árbol","Desratizar, desinsectar y desinfectar en vía pública", \
+"Falta de recolección de restos de poda de arbolado público",\
+"Mayor presencia policial",\
+"Inconvenientes con trámites",\
+"Criaderos de mosquitos",\
+"Reparación de luminaria por artefacto roto",\
+"Hidrolavado por grafitis/pegatinas",\
+"Funcionamiento / mantenimiento de escaleras mecánicas y ascensores- SUBTE",\
+"Ocupación indebida de la vereda/calzada por local comercial",\
+"Inconvenientes en Hospital Público",\
+"Reparación de rampa de accesibilidad",\
+"Ocupación indebida por mantero o vendedor ambulante",\
+"Vereda sucia por mascotas",\
+"Inconvenientes con el personal - SUBTE",\
+"Refugio de transporte en mal estado o abandonado",\
+"Queja por Contenedores de basura "]
+
+
+
+
 os.chdir("/home/eduardo/GCBA/ExpresionBA/Proceso_ExpresionBA/data/")
 
 f = open("Scores.csv", "w")
-linea = 'Observacion'+";"+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'+" ; "+'Id_Original'
+linea = 'Observacion'+";"+'prestacion_propuesta' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaTestigo_Lemma'+" ; "+'PrestaTestigo_Original'+" ; "+'Id_Original'
 f.write(linea+"\n")
 
 f2 = open("Scores_small.csv", "w")
-linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'+" ; "+'Id_Original'
+linea = 'Observacion'+" ; "+'prestacion_propuesta' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaTestigo_Lemma'+" ; "+'PrestaTestigo_Original'+" ; "+'Id_Original'
 f2.write(linea+"\n")
 
 f4 = open("Prestaciones_Lematizadas_limpio.csv", "w")   ## pongo en lowercase
@@ -38,11 +61,11 @@ linea = 'Prestacion_Lemma'+" ; "+'Prestacion'
 f4.write(linea+"\n")
 
 f5 = open("Scores_small_50Percent.csv", "w")
-linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'+" ; "+'Id_Original'
+linea = 'Observacion'+" ; "+'prestacion_propuesta' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaTestigo_Lemma'+" ; "+'PrestaTestigo_Original'+" ; "+'Id_Original'
 f5.write(linea+"\n")
 
 f6 = open("Scores_small_40Percent.csv", "w")
-linea = 'Observacion'+" ; "+'prestacion' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaClasificada_Lemma'+" ; "+'PrestaClasificada_Original'+" ; "+'Id_Original'
+linea = 'Observacion'+" ; "+'prestacion_propuesta' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaTestigo_Lemma'+" ; "+'PrestaTestigo_Original'+" ; "+'Id_Original'
 f6.write(linea+"\n")
 
 
@@ -158,6 +181,12 @@ for index, row in df_lemmas_historico_observa.iterrows():  ## son las 558 MIL
     el_ide = row[4]
     if row[0].find(";")>0:
         #print(row[0])
+        #sys.exit()
+        continue
+    
+    print(row[3])
+    if row[3] not in las_top:
+        #print("No esta en las top ", row[3])
         #sys.exit()
         continue
     
