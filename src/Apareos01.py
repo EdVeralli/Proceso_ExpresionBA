@@ -184,7 +184,7 @@ for index, row in df_lemmas_historico_observa.iterrows():  ## son las 558 MIL
         #sys.exit()
         continue
     
-    print(row[3])
+    #print(row[3])
     if row[3] not in las_top:
         #print("No esta en las top ", row[3])
         #sys.exit()
