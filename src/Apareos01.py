@@ -60,11 +60,11 @@ f4 = open("Prestaciones_Lematizadas_limpio.csv", "w")   ## pongo en lowercase
 linea = 'Prestacion_Lemma'+" ; "+'Prestacion' 
 f4.write(linea+"\n")
 
-f5 = open("Scores_small_50Percent.csv", "w")
+f5 = open("Scores_small_50Percent_solo_top.csv", "w")
 linea = 'Observacion'+" ; "+'prestacion_propuesta' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaTestigo_Lemma'+" ; "+'PrestaTestigo_Original'+" ; "+'Id_Original'
 f5.write(linea+"\n")
 
-f6 = open("Scores_small_40Percent.csv", "w")
+f6 = open("Scores_small_40Percent_solo_top.csv", "w")
 linea = 'Observacion'+" ; "+'prestacion_propuesta' +" ; "+'encontro' +" ; "+'total'+" ; "+'%'+" ; "+'PrestaTestigo_Lemma'+" ; "+'PrestaTestigo_Original'+" ; "+'Id_Original'
 f6.write(linea+"\n")
 
