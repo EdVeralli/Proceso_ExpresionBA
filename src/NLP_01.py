@@ -39,6 +39,29 @@ df_hist_unique = df_hist.drop_duplicates()
 
 
 
+"""
+Funcionamiento / mantenimiento de escaleras mecánicas y ascensores- SUBTE 
+unifica 
+    "Funcionamiento y mantenimiento de ascensores - SUBTE" 
+    "Funcionamiento / mantenimiento de escaleras mecánicas - SUBTE"
+"""
+col_one_list = df_hist_unique['PRESTACION'].tolist()
+
+if "Funcionamiento y mantenimiento de ascensores - SUBTE" in col_one_list:
+    print("esta la prestacion vieja --> Funcionamiento y mantenimiento de ascensores - SUBTE\n\n\n\n")
+
+if "Funcionamiento / mantenimiento de escaleras mecánicas - SUBTE" in col_one_list:
+    print("esta la prestacion vieja --> Funcionamiento / mantenimiento de escaleras mecánicas - SUBTE\n\n\n\n\n\n")
+    
+df_hist_unique.PRESTACION = df_hist_unique.PRESTACION.replace({"Funcionamiento y mantenimiento de ascensores - SUBTE": "Funcionamiento / mantenimiento de escaleras mecánicas y ascensores- SUBTE"})
+df_hist_unique.PRESTACION = df_hist_unique.PRESTACION.replace({"Funcionamiento / mantenimiento de escaleras mecánicas - SUBTE": "Funcionamiento / mantenimiento de escaleras mecánicas y ascensores- SUBTE"})
+    
+df_hist_unique = df_hist_unique.drop_duplicates()
+   
+    
+sys.exit()
+
+
 df_hist_unique.PRESTACION = df_hist_unique.PRESTACION.replace({"Reubicación de contenedor": "Queja por Contenedores de basura "})
 df_hist_unique.PRESTACION = df_hist_unique.PRESTACION.replace({"Recolección de residuos fuera del contenedor": "Queja por Contenedores de basura "})
 df_hist_unique.PRESTACION = df_hist_unique.PRESTACION.replace({"Reparación de contenedor": "Queja por Contenedores de basura "})
